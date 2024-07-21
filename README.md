@@ -12,7 +12,7 @@ If you miss String parsing, check out the new [monetize gem](https://github.com/
 
 ## Contributing
 
-See the [Contribution Guidelines](https://github.com/RubyMoney/money/blob/master/CONTRIBUTING.md)
+See the [Contribution Guidelines](https://github.com/RubyMoney/money/blob/main/CHANGELOG.md)
 
 ## Introduction
 
@@ -199,7 +199,7 @@ using:
 Money.default_currency = Money::Currency.new("CAD")
 ```
 
-If you use [Rails](https://github.com/RubyMoney/money/tree/master#ruby-on-rails), then `config/initializers/money.rb` is a very good place to put this.
+If you use [Rails](https://github.com/RubyMoney/money/tree/main#ruby-on-rails), then `config/initializers/money.rb` is a very good place to put this.
 
 ### Currency Exponent
 
@@ -446,7 +446,7 @@ implementations.
 
 ## Formatting
 
-There are several formatting rules for when `Money#format` is called. For more information, check out the [formatting module source](https://github.com/RubyMoney/money/blob/master/lib/money/money/formatter.rb), or read the latest release's [rdoc version](http://www.rubydoc.info/gems/money/Money/Formatter).
+There are several formatting rules for when `Money#format` is called. For more information, check out the [formatting module source](https://github.com/RubyMoney/money/blob/main/lib/money/money/formatter.rb), or read the latest release's [rdoc version](http://www.rubydoc.info/gems/money/Money/Formatter).
 
 If you wish to format money according to the EU's [Rules for expressing monetary units](http://publications.europa.eu/code/en/en-370303.htm#position) in either English, Irish, Latvian or Maltese:
 
