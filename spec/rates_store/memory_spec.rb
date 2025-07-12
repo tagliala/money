@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Money::RatesStore::Memory do
-  let(:subject) { described_class.new }
-
   describe '#add_rate and #get_rate' do
     it 'stores rate in memory' do
       expect(subject.add_rate('USD', 'CAD', 0.9)).to be 0.9
@@ -52,7 +50,7 @@ RSpec.describe Money::RatesStore::Memory do
   end
 
   describe '#marshal_dump' do
-    let(:subject) { Money::RatesStore::Memory.new(optional: true) }
+    subject { Money::RatesStore::Memory.new(optional: true) }
 
     it 'can reload' do
       bank = Money::Bank::VariableExchange.new(subject)
