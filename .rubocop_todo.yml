@@ -119,10 +119,6 @@ RSpec/StubbedMock:
     - 'spec/money/formatting_spec.rb'
     - 'spec/money_spec.rb'
 
-RSpec/SubjectDeclaration:
-  Exclude:
-    - 'spec/rates_store/memory_spec.rb'
-
 RSpec/SubjectStub:
   Exclude:
     - 'spec/bank/variable_exchange_spec.rb'
