@@ -160,30 +160,30 @@ RSpec.describe Money::Bank::VariableExchange do
   end
 
   describe "#export_rates" do
+    let(:rates) { { "USD_TO_EUR" => 1.25, "USD_TO_JPY" => 2.55 } }
+
     before do
       subject.set_rate('USD', 'EUR', 1.25)
       subject.set_rate('USD', 'JPY', 2.55)
-
-      @rates = { "USD_TO_EUR" => 1.25, "USD_TO_JPY" => 2.55 }
     end
 
     context "with format == :json" do
       it "returns rates formatted as json" do
         json = subject.export_rates(:json)
-        expect(JSON.load(json)).to eq @rates
+        expect(JSON.load(json)).to eq rates
       end
     end
 
     context "with format == :ruby" do
       it "returns rates formatted as ruby objects" do
-        expect(Marshal.load(subject.export_rates(:ruby))).to eq @rates
+        expect(Marshal.load(subject.export_rates(:ruby))).to eq rates
       end
     end
 
     context "with format == :yaml" do
       it "returns rates formatted as yaml" do
         yaml = subject.export_rates(:yaml)
-        expect(YAML.load(yaml)).to eq @rates
+        expect(YAML.load(yaml)).to eq rates
       end
     end
 
@@ -197,7 +197,7 @@ RSpec.describe Money::Bank::VariableExchange do
       it "writes rates to file" do
         f = double('IO')
         expect(File).to receive(:open).with('null', 'w').and_yield(f)
-        expect(f).to receive(:write).with(JSON.dump(@rates))
+        expect(f).to receive(:write).with(JSON.dump(rates))
 
         subject.export_rates(:json, 'null')
       end

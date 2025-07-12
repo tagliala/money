@@ -139,13 +139,12 @@ RSpec.describe Money::Arithmetic do
 
     context 'when conversions disallowed' do
       around do |example|
-        begin
-          old_default_bank = Money.default_bank
-          Money.disallow_currency_conversion!
-          example.run
-        ensure
-          Money.default_bank = old_default_bank
-        end
+        old_default_bank = Money.default_bank
+        Money.disallow_currency_conversion!
+
+        example.run
+      ensure
+        Money.default_bank = old_default_bank
       end
 
       context 'when currencies differ' do
