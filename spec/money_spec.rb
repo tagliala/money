@@ -13,20 +13,23 @@ RSpec.describe Money do
     it 'sets the locale_backend to nil' do
       Money.locale_backend = nil
 
-      expect(Money.locale_backend).to eq(nil)
+      expect(Money.locale_backend).to be_nil
     end
   end
 
   describe ".new" do
-    let(:initializing_value) { 1 }
     subject(:money) { Money.new(initializing_value) }
 
-    it "should be an instance of `Money::Bank::VariableExchange`" do
+    let(:initializing_value) { 1 }
+
+
+    it "is an instance of `Money::Bank::VariableExchange`" do
       expect(money.bank).to be Money::Bank::VariableExchange.instance
     end
 
     context 'given the initializing value is an integer' do
       let(:initializing_value) { Integer(1) }
+
       it 'stores the integer as the number of cents' do
         expect(money.cents).to eq initializing_value
       end
@@ -35,39 +38,45 @@ RSpec.describe Money do
     context 'given the initializing value is a float' do
       context 'and the value is 1.00' do
         let(:initializing_value) { 1.00 }
+
         it { is_expected.to eq Money.new(1) }
       end
 
       context 'and the value is 1.01' do
         let(:initializing_value) { 1.01 }
+
         it { is_expected.to eq Money.new(1) }
       end
 
       context 'and the value is 1.50' do
         let(:initializing_value) { 1.50 }
+
         it { is_expected.to eq Money.new(2) }
       end
     end
 
     context 'given the initializing value is a rational' do
       let(:initializing_value) { Rational(1) }
+
       it { is_expected.to eq Money.new(1) }
     end
 
     context 'given the initializing value is money' do
       let(:initializing_value) { Money.new(1_00, Money::Currency.new('NZD')) }
+
       it { is_expected.to eq initializing_value }
     end
 
     context "given the initializing value doesn't respond to .to_d" do
       let(:initializing_value) { :"1" }
+
       it { is_expected.to eq Money.new(1) }
     end
 
     context 'given a currency is not provided' do
       subject(:money) { Money.new(initializing_value) }
 
-      it "should have the default currency" do
+      it "has the default currency" do
         expect(money.currency).to eq Money.default_currency
       end
 
@@ -81,7 +90,7 @@ RSpec.describe Money do
           Money.default_currency = default_currency
         end
 
-        it 'should throw an NoCurrency Error' do
+        it 'throws an NoCurrency Error' do
           expect { money }.to raise_error(Money::Currency::NoCurrency)
         end
       end
@@ -93,7 +102,7 @@ RSpec.describe Money do
       context 'and the currency is NZD' do
         let(:currency) { Money::Currency.new('NZD') }
 
-        it "should have NZD currency" do
+        it "has NZD currency" do
           expect(money.currency).to eq Money::Currency.new('NZD')
         end
       end
@@ -101,7 +110,7 @@ RSpec.describe Money do
       context 'and the currency is nil' do
         let(:currency) { nil }
 
-        it "should have the default currency" do
+        it "has the default currency" do
           expect(money.currency).to eq Money.default_currency
         end
       end
@@ -125,7 +134,7 @@ RSpec.describe Money do
       context 'given the initializing value is 1.50' do
         let(:initializing_value) { 1.50 }
 
-        it "should have the correct cents" do
+        it "has the correct cents" do
           expect(money.cents).to eq BigDecimal('1.50')
         end
       end
@@ -248,7 +257,7 @@ RSpec.describe Money do
       context 'and the currency is nil' do
         let(:currency) { nil }
 
-        it "should have the default currency" do
+        it "has the default currency" do
           expect(Money.from_amount(1, currency).currency).to eq Money.default_currency
         end
       end
@@ -694,7 +703,7 @@ YAML
 
     it "does no exchange when the currencies are the same" do
       money = Money.new(100_00, "USD")
-      expect(money.bank).to_not receive(:exchange_with)
+      expect(money.bank).not_to receive(:exchange_with)
       expect(money.exchange_to("USD")).to eq money
     end
   end
@@ -828,8 +837,10 @@ YAML
   end
 
   describe "#round" do
-    let(:money) { Money.new(15.75, 'NZD') }
     subject(:rounded) { money.round }
+
+    let(:money) { Money.new(15.75, 'NZD') }
+
 
     context "without infinite_precision" do
       it "returns a different money" do

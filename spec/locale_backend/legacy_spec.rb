@@ -21,6 +21,7 @@ RSpec.describe Money::LocaleBackend::Legacy do
 
   describe '#lookup' do
     subject { described_class.new }
+
     let(:currency) { Money::Currency.new('USD') }
 
     context 'use_i18n is true and i18n lookup is successful' do
