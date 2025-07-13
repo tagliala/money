@@ -82,12 +82,12 @@ RSpec.describe Money do
 
       context 'without a default' do
         around do |example|
-          default_currency = Money.default_currency
+          old_default_currency = Money.default_currency
           Money.default_currency = nil
 
           example.run
 
-          Money.default_currency = default_currency
+          Money.default_currency = old_default_currency
         end
 
         it 'throws an NoCurrency Error' do
@@ -158,13 +158,13 @@ RSpec.describe Money do
   end
 
   describe ".add_rate" do
-    before do
-      @default_bank = Money.default_bank
+    around do |example|
+      old_default_bank = Money.default_bank
       Money.default_bank = Money::Bank::VariableExchange.new
-    end
 
-    after do
-      Money.default_bank = @default_bank
+      example.run
+
+      Money.default_bank = old_default_bank
     end
 
     it "saves rate into current bank" do
@@ -174,12 +174,12 @@ RSpec.describe Money do
   end
 
   describe ".disallow_currency_conversions!" do
-    before do
-      @default_bank = Money.default_bank
-    end
+    around do |example|
+      old_default_bank = Money.default_bank
 
-    after do
-      Money.default_bank = @default_bank
+      example.run
+
+      Money.default_bank = old_default_bank
     end
 
     it "disallows conversions when doing money arithmetic" do
